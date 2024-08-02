@@ -1,33 +1,22 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from .model import ProductSchema
+from .functions import data, create_product, product_from_id
 
 app = FastAPI()
-
-data = [{
-    "id":1,
-    "produto":"notebook",
-    "descricao":"notebook Azus",
-    "preco":100
-    },
-    {
-    "id":2,
-    "produto":"cellphone",
-    "descricao":"cellphone Samsung",
-    "preco":1500
-    },
-    {
-    "id":3,
-    "produto":"mouse",
-    "descricao":"optical mouse",
-    "preco":47
-    }
-]
 
 @app.get("/")
 def root_path():
     return {"name":"Poso"}
 
-@app.get("/product/{id}")
-def product_from_id(id:int):
-    for product in data:
-        if product["id"] == id:
-            return product
+@app.get("/product/{id}",response_model=ProductSchema)
+def get_product_id(id:int):
+    product_id = product_from_id(id)
+    if product_id == {}:
+        raise HTTPException(status_code=404, detail=f"Item {id} not found") 
+    else:
+        return product_id
+    
+@app.post("/product", response_model=ProductSchema)
+def insert_product(prd:ProductSchema):
+    return create_product(prd)
+    
