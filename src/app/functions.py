@@ -21,6 +21,9 @@ data = [{
 
 
 def product_from_id(id:int):
+    """
+        Captura um produto especifico passando o seu ID
+    """
     for product in data:
         if product["id"] == id:
             return product   
