@@ -1,3 +1,4 @@
+
 data = [{
     "id":1,
     "produto":"notebook",
@@ -18,4 +19,15 @@ data = [{
     }
 ]
 
-print(data["id"][id])
+
+def product_from_id(id:int):
+    for product in data:
+        if product["id"] == id:
+            return product   
+    return {}
+
+
+
+def create_product(prd:dict):
+    data.append(prd)
+    return prd
