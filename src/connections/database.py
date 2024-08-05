@@ -28,4 +28,4 @@ class Products(Base):
     descricao = Column(String)
     preco =  Column(Float, nullable=False)
 
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
